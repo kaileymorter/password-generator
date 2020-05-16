@@ -37,7 +37,7 @@ function generatePassword (){
   console.log(getNumber);
 
   var getLowerCase = confirm("Do you want lowercase characters?");
-  console.log(lowerCase);
+  console.log(getLowerCase);
 
   var getUpperCase = confirm("Do you want uppercase characters?");
   console.log(getUpperCase);
