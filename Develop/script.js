@@ -1,8 +1,7 @@
-
-//This assigns the "generate button" in HTML to a variable
+// Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
  
-//This is a function that will write the password in the password box when the generatePassword() is executed
+// Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
@@ -11,20 +10,19 @@ function writePassword() {
 
 }
 
-//This tells js that when the button "generate password" is clicked, start generating the prompts/password
+// Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-//possible password characters
+//character variables
 var number = "0123456789";
 var lowerCase = "abcdefghigklmnopqrstuvwxyz";
 var upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var specialCharacter = "!@#$%^&*()";
-
+var special = "!@#$%^&*()";
 
 //After you click the "generate password" button, the generatePassword() will start
 function generatePassword (){
 
-  //possible password length
+  //user is presented with a prompt to enter a password length
   var length = prompt("How many characters do you want it to be? Must be more than 8 but less than 128.");
   console.log(length);
 
@@ -34,37 +32,56 @@ function generatePassword (){
     return generatePassword();
   }
 
-  //if valid number, run criteria prompts
-  if (length = true) {
-    number = confirm("Do you want numbers in your password?");
-    console.log(number);
+  //if password length is valid, then run these prompts
+  var getNumber = confirm("Do you want numbers in your password?");
+  console.log(getNumber);
 
-    lowerCase = confirm("Do you want lowercase characters?");
-    console.log(lowerCase);
+  var getLowerCase = confirm("Do you want lowercase characters?");
+  console.log(lowerCase);
+
+  var getUpperCase = confirm("Do you want uppercase characters?");
+  console.log(getUpperCase);
+
+  var getSpecial = confirm("Do you want special characters?")
+  console.log(getSpecial)
   
-    upperCase = confirm("Do you want uppercase characters?");
-    console.log(upperCase);
-  
-    specialCharacter = confirm("Do you want special characters?")
-    console.log(specialCharacter);
-    
-    if (number === false && lowerCase === false && upperCase === false && specialCharacter === false) {
-      alert("Must choose ONE character type")
-      return generatePassword();
-    }
+  //if user doesn't select ANY special characters, start the process over again.
+  if (getNumber === false && getLowerCase === false && getUpperCase === false && getSpecial === false) {
+    alert("Must choose ONE character type")
   }
 
-  //password array
-  var passwordArray = [
-    function getNumbers() {
-      return number.charAt(Math.floor(Math.random() * Math.floor()))
-    }
-  ]
+  //if user confirms the use of a character, then add it to the possibleCharacters string
+  var possibleCharacters = "";
 
+  if (getNumber === true) {
+    possibleCharacters += number;
+  }
+
+  if (getLowerCase === true) {
+    possibleCharacters += lowerCase;
+  }
+
+  if (getUpperCase === true) {
+    possibleCharacters += upperCase;
+  }
+
+  if (getSpecial === true) {
+    possibleCharacters += special;
+  }
+
+  //calculate the password by creating a string in which the password can go
+  var randomPassword = "";
+
+  //for loop that will loop through the possibleCharacters at random at the length in which the user inputed
+  for (var i = 0; i < length; i++){
+    var randomNumber = Math.floor((Math.random() * possibleCharacters.length) + 1);
+
+    var randomCharacter = possibleCharacters.charAt(randomNumber);
+
+    randomPassword += randomCharacter;
+  }
+
+  //return the randomPassword generated in the password box
+  console.log(randomPassword);
+  return randomPassword;
 }
-
-//create a for loop to generate password based on criteria chosen
-//for (var i = 0; i = length; i++){
-  //writePassword () = password + [
-    //number.charAt(Math.floor(Math.random() * Math.floor(length.value - 1)))];}
-
